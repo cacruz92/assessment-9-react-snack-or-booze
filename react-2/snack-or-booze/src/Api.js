@@ -21,6 +21,11 @@ class SnackOrBoozeApi {
     return result.data;
   }
 
+  static async isDrink(itemId) {
+    const res = await axios.get(`${BASE_API_URL}/drinks/${itemId}`);
+    return res.status === 200;
+  }
+
 }
 
 export default SnackOrBoozeApi;

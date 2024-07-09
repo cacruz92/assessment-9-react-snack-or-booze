@@ -10,20 +10,29 @@ import {
   ListGroupItem
 } from "reactstrap";
 
-function Menu({ category, items }) {
+function Menu({ category, items, isDrink }) {
   return (
     <section className="col-md-4">
       <Card>
         <CardBody>
-          <CardTitle className="font-weight-bold text-center">
-            {category} Menu
-          </CardTitle>
+          {category === 'Menu'? (
+            <CardTitle className="font-weight-bold text-center">
+              Full Menu
+            </CardTitle>
+          ):(
+            <CardTitle className="font-weight-bold text-center">
+              {category} Menu
+            </CardTitle>
+          )}
+                   
           <CardText className="text-center">
             Below is a list of all the {category.toLowerCase()} we offer. Pick one and enjoy!
           </CardText>
           <ListGroup>
             {items.map(item => (
-              <Link to={`/${category.toLowerCase()}/${item.id}`} key={item.id}>
+              <Link 
+              to={isDrink(item.id) ? `/drinks/${item.id}` : `snacks/${item.id}`} 
+              key={item.id}>
                 <ListGroupItem>{item.name}</ListGroupItem>
               </Link>
             ))}

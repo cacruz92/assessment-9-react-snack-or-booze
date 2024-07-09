@@ -7,6 +7,7 @@ import NavBar from "./NavBar";
 import { Route, Switch } from "react-router-dom";
 import Menu from "./Menu";
 import Snack from "./MenuItem";
+import CantFind from "./CantFind";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -34,6 +35,10 @@ function App() {
     getDrinks();
   }, []);
 
+  const isDrink = (itemId) => {
+    return drinks.some(drink => drink.id === itemId)
+  }
+
   if (isLoading) {
     return <p>Loading &hellip;</p>;
   }
@@ -48,24 +53,24 @@ function App() {
               <Home snacks={snacks} />
             </Route>
             <Route exact path="/snacks">
-              <Menu category="Snacks" items={snacks} title="Snacks" />
+              <Menu isDrink={isDrink} category="Snacks" items={snacks} title="Snacks" />
             </Route>
             <Route exact path="/fullmenu">
-              <Menu category="Menu" items={fullMenu} title="Menu" />
+              <Menu isDrink={isDrink} category="Menu" items={fullMenu} title="Menu" />
             </Route>
             <Route path="/snacks/:id">
               <Snack items={snacks} cantFind="/snacks" />
             </Route>
             
             <Route exact path="/drinks">
-              <Menu category="Drinks" items={drinks} title="Drinks" />
+              <Menu isDrink={isDrink} category="Drinks" items={drinks} title="Drinks" />
             </Route>
             <Route path="/drinks/:id">
               <Snack items={drinks} cantFind="/drinks" />
             </Route>
             
             <Route>
-              <h3 className="cant-find-text">Hmmm. I can't seem to find what you want. Try another page!</h3>
+              <CantFind />
             </Route>
           </Switch>
         </main>
